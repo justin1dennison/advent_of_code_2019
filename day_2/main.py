@@ -3,7 +3,7 @@ from itertools import product
 def step(state, noun, verb):
     state[1] = noun
     state[2] = verb
-    chunks = [state[i : i + 4] for i in range(0, len(state) - 1, 4)]
+    chunks = (state[i : i + 4] for i in range(0, len(state) - 1, 4))
     for chunk in chunks:
         opcode, x, y, out = chunk
         if opcode == 99:
