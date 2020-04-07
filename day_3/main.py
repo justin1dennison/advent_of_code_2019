@@ -3,6 +3,7 @@ from enum import Enum
 import json
 from collections import Counter
 
+
 with open("./input.txt") as f:
     data = [line.strip() for line in f.readlines()]
 
@@ -55,12 +56,19 @@ def distance(point: Point, frm: Point = Point((0, 0))) -> float:
 
 def main():
     first, second = [path(line) for line in data]
-    fpositions = set(positions(Point((0, 0)), first))
-    spositions = set(positions(Point((0, 0)), second))
+    origin = Point((0, 0))
+    # Part 1
+    fpositions = set(positions(origin, first))
+    spositions = set(positions(origin, second))
     intersections = fpositions & spositions
     distances = (distance(intersection) for intersection in intersections)
     print(f"Minimum Distance: {min(distances)}")
 
+    # Part 2
+    from itertools import product
+    # steps = (x for x, y in product(positions(origin, first), positions(origin, second)) if x == y)
+    steps = (x for x in positions(origin, first) for y in positions(origin, second) if x == y)
+    print(next(steps))
 
 if __name__ == "__main__":
     main()
